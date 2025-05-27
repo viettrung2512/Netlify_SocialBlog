@@ -87,17 +87,6 @@ app.use("/api/admin", adminRouter);
 app.use("/api/report-items", reportItemRouter);
 app.use("/api/history", historyRoutes);
 
-// // Serve React build
-// app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// // Serve React frontend for non-API routes
-// app.get(/^\/(?!api).*/, (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-// });
-
-// Error Handlers
-
-// 404 Not Found
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not Found" });
 });
