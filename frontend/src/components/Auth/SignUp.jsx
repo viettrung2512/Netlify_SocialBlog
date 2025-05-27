@@ -7,6 +7,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const Signup = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/register', {
+    const response = await fetch(`${API_BASE_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, username, password }), 

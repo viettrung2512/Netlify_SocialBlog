@@ -9,6 +9,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,7 +30,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/login`, {
+    const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
