@@ -5,11 +5,12 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/api/posts", {
+        const response = await fetch(`${API_BASE_URL}/api/posts`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

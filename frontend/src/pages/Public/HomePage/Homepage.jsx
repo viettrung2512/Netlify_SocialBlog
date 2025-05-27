@@ -13,6 +13,7 @@ const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsPerPage, setBlogsPerPage] = useState(6);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const getCurrentUserId = () => {
     return localStorage.getItem("userId");
@@ -25,7 +26,7 @@ const Homepage = () => {
 
     try {
       const response = await fetch(
-        `/api/posts?userId=${userId}`, 
+        `${API_BASE_URL}/api/posts?userId=${userId}`, 
         {
           method: "GET",
           headers: {
@@ -58,7 +59,7 @@ const Homepage = () => {
 
     try {
       const mostLikedResponse = await fetch(
-        `/api/posts/most-liked${userId ? `?userId=${userId}` : ''}`,
+        `${API_BASE_URL}/api/posts/most-liked${userId ? `?userId=${userId}` : ''}`,
         {
           method: "GET",
           headers: {
