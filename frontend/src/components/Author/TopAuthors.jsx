@@ -9,34 +9,22 @@ const TopAuthors = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const fetchTopAuthors = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/users/most-posts`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(`${API_BASE_URL}/api/users/most-posts`);
         if (!response.ok) {
           throw new Error("Failed to fetch top authors");
         }
         const data = await response.json();
-        const topAuthors = await Promise.all(
-          data.slice(0, 4).map(async (author) => {
-            const followersResponse = await fetch(
-              `/api/follows/${author.id}/followers`
-            );
-            const followersData = await followersResponse.json();
-            return {
-              id: author.id,
-              postCount: author.postCount,
-              followerNumber: author.followerNumber,
-              followersCount: followersData.length, 
-              ...author.userDetails[0], 
-            };
-          })
-        );
+        const topAuthors = data.slice(0, 4).map((author) => ({
+          id: author._id,
+          postCount: author.postCount,
+          name: author.userDetails[0].username, // Sử dụng username nếu không có name
+          username: author.userDetails[0].username,
+          profilePicture: author.userDetails[0].profilePicture,
+          followerNumber: author.userDetails[0].followerNumber || 0,
+          // Bỏ phần fetch followers riêng để đơn giản hóa
+        }));
 
         setAuthors(topAuthors);
       } catch (err) {
@@ -78,7 +66,7 @@ const TopAuthors = () => {
                   Total Posts: {author.postCount}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Followers: {author.followersCount}
+                  Followers: {author.followerNumber}
                 </p>
               </div>
             </div>

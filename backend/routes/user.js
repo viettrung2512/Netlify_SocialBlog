@@ -4,7 +4,7 @@ const UserController = require('../controllers/UserController');
 const verifyToken = require('../middleware/verifyToken');
 
 router.get('/me', verifyToken, UserController.getAuthenticatedUser);
-router.get('/most-posts', verifyToken, UserController.getTopAuthors);
+router.get('/most-posts', UserController.getTopAuthors);
 router.get('/:id', verifyToken, UserController.getUserById);
 router.put('/', verifyToken, UserController.updateUser);
 

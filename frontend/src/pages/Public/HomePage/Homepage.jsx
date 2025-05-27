@@ -22,17 +22,23 @@ const Homepage = () => {
   const fetchBlogs = async () => {
     const token = localStorage.getItem("token");
     const userId = getCurrentUserId();
-    setLoading(true); 
+    setLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/posts?userId=${userId}`, 
-        {
-          method: "GET",
-          headers: {
+      const headers = token
+        ? {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-          },
+          }
+        : {
+            "Content-Type": "application/json",
+          };
+
+      const response = await fetch(
+        `${API_BASE_URL}/api/posts${userId ? `?userId=${userId}` : ""}`,
+        {
+          method: "GET",
+          headers: headers,
         }
       );
 
@@ -54,28 +60,24 @@ const Homepage = () => {
   };
 
   const fetchMostLikedBlogs = async () => {
-    const token = localStorage.getItem("token");
-    const userId = getCurrentUserId();
-
     try {
       const mostLikedResponse = await fetch(
-        `${API_BASE_URL}/api/posts/most-liked${userId ? `?userId=${userId}` : ''}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${API_BASE_URL}/api/posts/most-liked`
       );
 
       if (mostLikedResponse.ok) {
         const mostLikedData = await mostLikedResponse.json();
-        const mostLikedBlogsData = mostLikedData.content || [];
+        // Kiểm tra xem dữ liệu trả về có phải là mảng không
+        const mostLikedBlogsData = Array.isArray(mostLikedData)
+          ? mostLikedData
+          : mostLikedData.content || [];
         setMostLikedBlogs(mostLikedBlogsData);
       } else {
         const errorData = await mostLikedResponse.json();
-        console.error("Lỗi khi lấy bài blog được thích nhiều nhất:", errorData.message);
+        console.error(
+          "Lỗi khi lấy bài blog được thích nhiều nhất:",
+          errorData.message
+        );
       }
     } catch (error) {
       console.error("Lỗi kết nối API:", error);
@@ -122,9 +124,9 @@ const Homepage = () => {
   const handlePageSizeChange = (e) => {
     const newSize = Number(e.target.value);
     if (!isNaN(newSize) && newSize > 0) {
-       setBlogsPerPage(newSize);
+      setBlogsPerPage(newSize);
     } else {
-        console.warn("Invalid page size selected:", e.target.value);
+      console.warn("Invalid page size selected:", e.target.value);
     }
   };
 
@@ -137,10 +139,10 @@ const Homepage = () => {
 
   const handlePageButtonClick = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
-        setCurrentPage(pageNumber);
-        scrollToAllBlogs();
+      setCurrentPage(pageNumber);
+      scrollToAllBlogs();
     } else {
-        console.warn("Attempted to navigate to invalid page number:", pageNumber);
+      console.warn("Attempted to navigate to invalid page number:", pageNumber);
     }
   };
 
@@ -164,8 +166,18 @@ const Homepage = () => {
           {showMessage && (
             <div className="fixed top-20 right-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg z-50 animate-fade-in-out">
               <div className="flex items-center">
-                <svg className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="h-6 w-6 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 <p className="font-medium">Login successfully!</p>
               </div>
@@ -191,13 +203,17 @@ const Homepage = () => {
                 <div className="w-12 h-12 rounded-full absolute border-4 border-gray-200"></div>
                 <div className="w-12 h-12 rounded-full animate-spin absolute border-4 border-blue-600 border-t-transparent"></div>
               </div>
-              <p className="ml-4 text-gray-600 text-lg font-medium">Loading blogs...</p>
+              <p className="ml-4 text-gray-600 text-lg font-medium">
+                Loading blogs...
+              </p>
             </div>
           ) : (
             <>
               <section className="mb-12">
                 <div className="flex items-center mb-6">
-                  <h2 className="text-3xl font-bold text-gray-900">POPULAR BLOGS</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    POPULAR BLOGS
+                  </h2>
                   <div className="ml-4 h-1 bg-blue-600 flex-grow rounded-full"></div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -219,16 +235,22 @@ const Homepage = () => {
                           <span className="inline-block px-3 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded-full mb-3">
                             {blog.category}
                           </span>
-                          <h3 className="text-xl font-bold text-gray-900 line-clamp-2 mb-2">{blog.title}</h3>
+                          <h3 className="text-xl font-bold text-gray-900 line-clamp-2 mb-2">
+                            {blog.title}
+                          </h3>
                         </div>
                         <div className="flex items-center mt-4">
                           <img
                             className="w-8 h-8 rounded-full object-cover border-2 border-blue-500"
-                            src={blog.author?.profilePicture || "/placeholder.svg"}
+                            src={
+                              blog.author?.profilePicture || "/placeholder.svg"
+                            }
                             alt={blog.author?.name || "Unknown Author"}
                           />
                           <div className="ml-3">
-                            <p className="text-sm font-medium text-gray-900">{blog.author?.name || "Unknown"}</p>
+                            <p className="text-sm font-medium text-gray-900">
+                              {blog.author?.name || "Unknown"}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -246,8 +268,13 @@ const Homepage = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-transparent flex items-center">
                     <div className="p-8 max-w-md">
-                      <h3 className="text-3xl font-bold text-white mb-4">Discover the Future of Technology</h3>
-                      <p className="text-blue-100 mb-6">Explore the latest trends and innovations in the tech world</p>
+                      <h3 className="text-3xl font-bold text-white mb-4">
+                        Discover the Future of Technology
+                      </h3>
+                      <p className="text-blue-100 mb-6">
+                        Explore the latest trends and innovations in the tech
+                        world
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -255,7 +282,9 @@ const Homepage = () => {
 
               <section className="mb-12">
                 <div className="flex items-center mb-6">
-                  <h2 className="text-3xl font-bold text-gray-900">TOP AUTHORS</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    TOP AUTHORS
+                  </h2>
                   <div className="ml-4 h-1 bg-blue-600 flex-grow rounded-full"></div>
                 </div>
                 <TopAuthors />
@@ -263,23 +292,34 @@ const Homepage = () => {
 
               <section id="all-blogs-section" className="mb-12">
                 <div className="flex items-center mb-6">
-                  <h2 className="text-3xl font-bold text-gray-900">ALL BLOGS</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    ALL BLOGS
+                  </h2>
                   <div className="ml-4 h-1 bg-blue-600 flex-grow rounded-full"></div>
                 </div>
 
                 <div className="flex justify-between items-center mb-6">
                   <div className="text-sm text-gray-600">
-                    Showing <span className="font-medium">{currentBlogs.length}</span> of <span className="font-medium">{filteredBlogs.length}</span> results
+                    Showing{" "}
+                    <span className="font-medium">{currentBlogs.length}</span>{" "}
+                    of{" "}
+                    <span className="font-medium">{filteredBlogs.length}</span>{" "}
+                    results
                     {filteredBlogs.length > 0 && totalPages > 0 && (
                       <>
-                      {" "}
-                      - Page <span className="font-medium">{currentPage}</span> of{" "}
-                      <span className="font-medium">{totalPages}</span>
+                        {" "}
+                        - Page{" "}
+                        <span className="font-medium">
+                          {currentPage}
+                        </span> of{" "}
+                        <span className="font-medium">{totalPages}</span>
                       </>
                     )}
                   </div>
                   <div className="flex items-center">
-                    <span className="text-sm text-gray-600 mr-2">Items per page:</span>
+                    <span className="text-sm text-gray-600 mr-2">
+                      Items per page:
+                    </span>
                     <select
                       value={blogsPerPage}
                       onChange={handlePageSizeChange}
@@ -293,19 +333,27 @@ const Homepage = () => {
                 </div>
 
                 {currentBlogs.length > 0 ? (
-                    <BlogList blogs={currentBlogs} setBlogs={setBlogs} layout="grid" />
+                  <BlogList
+                    blogs={currentBlogs}
+                    setBlogs={setBlogs}
+                    layout="grid"
+                  />
                 ) : (
-                    <div className="text-center py-10">
-                        <p className="text-gray-500 text-lg">
-                            {searchTerm ? `No posts matching "${searchTerm}" were found.` : "No blog posts available."}
-                        </p>
-                    </div>
+                  <div className="text-center py-10">
+                    <p className="text-gray-500 text-lg">
+                      {searchTerm
+                        ? `No posts matching "${searchTerm}" were found.`
+                        : "No blog posts available."}
+                    </p>
+                  </div>
                 )}
 
                 {totalPages > 1 && (
                   <div className="flex justify-center mt-10 mb-6 space-x-2">
                     <button
-                      onClick={() => handlePageButtonClick(Math.max(currentPage - 1, 1))}
+                      onClick={() =>
+                        handlePageButtonClick(Math.max(currentPage - 1, 1))
+                      }
                       disabled={currentPage === 1}
                       className="px-4 py-2 rounded border border-gray-50 text-sm bg-gray-50 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
@@ -325,7 +373,11 @@ const Homepage = () => {
                       </button>
                     ))}
                     <button
-                      onClick={() => handlePageButtonClick(Math.min(currentPage + 1, totalPages))}
+                      onClick={() =>
+                        handlePageButtonClick(
+                          Math.min(currentPage + 1, totalPages)
+                        )
+                      }
                       disabled={currentPage === totalPages}
                       className="px-4 py-2 rounded border border-gray-50 text-sm bg-gray-50 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     >

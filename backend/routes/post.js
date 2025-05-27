@@ -6,7 +6,7 @@ const verifyToken = require("../middleware/verifyToken");
 router.get("/",postController.getAllPosts); //solved
 router.get("/me", verifyToken, postController.getMyPosts);//solved
 router.get("/search", postController.searchPosts); //solved
-router.get("/most-liked",verifyToken ,postController.getPostsByMostLikes); //solved
+router.get("/most-liked", postController.getPostsByMostLikes);
 router.get("/:id-posts", postController.getUserPosts);//solved
 router.get("/:id", postController.getPostById);//solved
 router.get("/post-by-com-id/:id", postController.getPostByCommentId);
