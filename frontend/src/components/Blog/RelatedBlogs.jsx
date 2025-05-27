@@ -5,13 +5,14 @@ import PropTypes from "prop-types";
 
 const RelatedBlogs = ({ tag, postId }) => {
   const [blogs, setBlogs] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBlogData = async () => {
       const token = localStorage.getItem("token");
       try {
         const response = await fetch(
-          `/api/posts/related/${tag}/${postId}`,
+          `${API_BASE_URL}/api/posts/related/${tag}/${postId}`,
           {
             method: "GET",
             headers: {

@@ -21,13 +21,14 @@ const BlogContent = () => {
   const [loading, setLoading] = useState(true);
   const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBlogData = async () => {
       const token = localStorage.getItem("token");
       setLoading(true);
       try {
-        const response = await fetch(`/api/posts/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/posts/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +69,7 @@ useEffect(() => {
     if (!token) return;
 
     try {
-      await fetch("/api/history/add", {
+      await fetch(`${API_BASE_URL}/api/history/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,6 +8,7 @@ const CommentButton = ({ blogId }) => {
   const [commentText, setCommentText] = useState("");
   const [activeCommentId, setActiveCommentId] = useState(null);
   const menuRef = useRef(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const formatDate = (apiDate) => {
     const date = new Date(apiDate);
@@ -21,7 +22,7 @@ const CommentButton = ({ blogId }) => {
     const fetchComments = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`/api/comments/${blogId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/comments/${blogId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,7 +65,7 @@ const CommentButton = ({ blogId }) => {
     if (commentText.trim()) {
       const newComment = { content: commentText };
       try {
-        const response = await fetch(`/api/comments/${blogId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/comments/${blogId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -94,7 +95,7 @@ const CommentButton = ({ blogId }) => {
       return;
     }
 
-    const url = `/api/likes/comment/${commentId}`;
+    const url = `${API_BASE_URL}/api/likes/comment/${commentId}`;
     const method = isLiked ? "DELETE" : "POST";
 
     try {
@@ -127,7 +128,7 @@ const CommentButton = ({ blogId }) => {
     }
 
     try {
-      const response = await fetch(`/api/comments/${commentId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

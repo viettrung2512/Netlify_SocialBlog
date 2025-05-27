@@ -27,11 +27,12 @@ const NotificationDropdown = () => {
   const [notifications, setNotifications] = useState([])
   /** @type {import('react').RefObject<HTMLDivElement>} */
   const dropdownRef = useRef(null)
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchNotifications = async () => {
     const token = localStorage.getItem("token")
     try {
-      const response = await fetch(`/api/notifications`, {
+      const response = await fetch(`${API_BASE_URL}/api/notifications`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,7 @@ const NotificationDropdown = () => {
   const markAsRead = async (id) => {
     const token = localStorage.getItem("token")
     try {
-      const response = await fetch(`/api/notifications/${id}/read`, {
+      const response = await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +102,7 @@ const NotificationDropdown = () => {
   const markAllAsRead = async () => {
     const token = localStorage.getItem("token")
     try {
-      const response = await fetch(`/api/notifications/read-all`, {
+      const response = await fetch(`${API_BASE_URL}/api/notifications/read-all`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

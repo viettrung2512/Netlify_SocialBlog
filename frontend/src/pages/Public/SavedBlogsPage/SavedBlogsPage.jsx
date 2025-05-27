@@ -14,6 +14,7 @@ const SavedBlogsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchSavedBlogs = async () => {
@@ -24,7 +25,7 @@ const SavedBlogsPage = () => {
       }
 
       try {
-        const response = await fetch(`/bookmarks`, {
+        const response = await fetch(`${API_BASE_URL}/bookmarks`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

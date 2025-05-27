@@ -36,6 +36,7 @@ const ProfilePage = () => {
   const [following, setFollowing] = useState([]);
   const [activeTab, setActiveTab] = useState("posts");
   const [modalLoading, setModalLoading] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,7 +45,7 @@ const ProfilePage = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await fetch(
-          `/api/users/${userId}`,
+          `${API_BASE_URL}/api/users/${userId}`,
           {
             method: "GET",
             headers: {
@@ -69,7 +70,7 @@ const ProfilePage = () => {
     const fetchMyPosts = async () => {
       try {
         const response = await fetch(
-          `/api/posts/${userId}-posts`,
+          `${API_BASE_URL}/api/posts/${userId}-posts`,
           {
             method: "GET",
             headers: {
@@ -105,7 +106,7 @@ const ProfilePage = () => {
     setModalLoading(true);
     try {
       const response = await fetch(
-        `/api/follows/${userId}/followers`,
+        `${API_BASE_URL}/api/follows/${userId}/followers`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -132,7 +133,7 @@ const ProfilePage = () => {
     setModalLoading(true);
     try {
       const response = await fetch(
-        `/api/follows/${userId}/following`,
+        `${API_BASE_URL}/api/follows/${userId}/following`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

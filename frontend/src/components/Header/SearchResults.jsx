@@ -10,6 +10,7 @@ function SearchResults() {
   const prevSearchTerm = useRef(searchTerm);
   const navigate = useNavigate();
   const searchResultsRef = useRef(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +22,7 @@ function SearchResults() {
       if (prevSearchTerm.current !== searchTerm) {
         setIsLoading(true);
         const response = await fetch(
-          `/api/posts/search?keyword=${searchTerm}`
+          `${API_BASE_URL}/api/posts/search?keyword=${searchTerm}`
         );
         const data = await response.json();
         setResults(data);

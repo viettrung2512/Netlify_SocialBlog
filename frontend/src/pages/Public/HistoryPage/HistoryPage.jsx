@@ -8,6 +8,7 @@ const HistoryPage = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   
   
@@ -21,7 +22,7 @@ const HistoryPage = () => {
       }
 
       try {
-        const response = await fetch("/api/history", {
+        const response = await fetch(`${API_BASE_URL}/api/history`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

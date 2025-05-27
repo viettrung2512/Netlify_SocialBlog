@@ -32,6 +32,7 @@ const AccountDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     if (!token) {
@@ -42,7 +43,7 @@ const AccountDetailPage = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await fetch("/api/users/me", {
+        const response = await fetch(`${API_BASE_URL}/api/users/me`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -123,7 +124,7 @@ const AccountDetailPage = () => {
     }
 
     try {
-      const response = await fetch("/api/users", {
+      const response = await fetch(`${API_BASE_URL}/api/users`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -22,6 +22,7 @@ const NewPost = ({ token }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const popularCategories = [
     "Technology",
@@ -89,8 +90,6 @@ const NewPost = ({ token }) => {
     }
   };
 
-  const API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
   const processImageUpload = async (imageFile) => {
     if (!imageFile) {
       toast.error("Please select an image file");
@@ -206,7 +205,7 @@ const NewPost = ({ token }) => {
     };
 
     try {
-      const response = await fetch(`/api/posts`, {
+      const response = await fetch(`${API_BASE_URL}/api/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

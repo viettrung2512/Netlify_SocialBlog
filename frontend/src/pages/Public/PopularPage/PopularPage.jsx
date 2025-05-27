@@ -11,6 +11,7 @@ const PopularPage = () => {
   const [timeFilter, setTimeFilter] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
   const blogsPerPage = 6
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchPopularBlogs = async () => {
     const token = localStorage.getItem("token")
@@ -18,7 +19,7 @@ const PopularPage = () => {
     try {
       setLoading(true)
       const response = await fetch(
-        `/api/posts/most-liked${timeFilter !== "all" ? `?period=${timeFilter}` : ""}`,
+        `${API_BASE_URL}/api/posts/most-liked${timeFilter !== "all" ? `?period=${timeFilter}` : ""}`,
         {
           method: "GET",
           headers: {
