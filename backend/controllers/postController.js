@@ -101,7 +101,8 @@ const searchPosts = async (req, res) => {
 
 const getPostsByMostLikes = async (req, res) => {
   try {
-    const result = await postService.getPostsByMostLikes(req.user.userId);
+    const userId = req.user ? req.user.userId : undefined;
+    const result = await postService.getPostsByMostLikes(userId);
     res.json({ content: result });
   } catch (err) {
     res.status(500).json({
