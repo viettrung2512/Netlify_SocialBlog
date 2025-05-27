@@ -74,7 +74,7 @@ const Login = () => {
     try {
       // 1. Gọi API xác thực
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/google`,
+        `${API_BASE_URL}/auth/google`,
         {
           method: "POST",
           headers: {
