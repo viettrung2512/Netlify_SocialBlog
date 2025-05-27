@@ -1,0 +1,14 @@
+[build]
+  command = "npm install && npm run build"
+  functions = "functions"
+  publish = "public"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server/:splat"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["mongoose", "jsonwebtoken", "bcryptjs", "cloudinary"]
+  timeout = 30
