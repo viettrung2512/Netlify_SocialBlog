@@ -51,7 +51,7 @@ app.use((req, res, next) => {
     [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' https://accounts.google.com",
-      "connect-src 'self' http://localhost:8080 https://accounts.google.com",
+      "connect-src 'self' http://localhost:8080 https://accounts.google.com https://netlifysocialblog-production.up.railway.app",
       "style-src 'self' 'unsafe-inline' https://accounts.google.com https://fonts.googleapis.com",
       "frame-src 'self' https://accounts.google.com",
       "font-src 'self' https://fonts.gstatic.com",
