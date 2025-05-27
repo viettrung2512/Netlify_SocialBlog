@@ -32,7 +32,8 @@ app.use(cors({
     'https://netlify-social.netlify.app/',
     'https://thuctaptotnghiep-production.up.railway.app',
     'https://accounts.google.com',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://netlifysocialblog-production.up.railway.app'
   ],
   exposedHeaders: ['Content-Type']
 }));
