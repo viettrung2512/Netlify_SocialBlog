@@ -36,12 +36,8 @@ exports.updateUser = async (req, res) => {
 
 exports.getTopAuthors = async (req, res) => {
   try {
-    const id = req.user.userId;
-    // console.log(id);
-
+    const id = req.user ? req.user.userId : undefined;
     const topAuthors = await UserService.getTopAuthors(id);
-    // console.log(topAuthors);
-
     res.json(topAuthors);
   } catch (err) {
     res.status(500).json({ message: 'Get top Author error' });
