@@ -48,7 +48,17 @@ const HistoryPage = () => {
 
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-white">
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full absolute border-4 border-gray-200"></div>
+          <div className="w-12 h-12 rounded-full animate-spin absolute border-4 border-blue-600 border-t-transparent"></div>
+        </div>
+        <p className="ml-4 text-gray-600 text-lg font-medium">
+          Loaidng...
+        </p>
+      </div>
+    );
   }
 
   if (error) {
