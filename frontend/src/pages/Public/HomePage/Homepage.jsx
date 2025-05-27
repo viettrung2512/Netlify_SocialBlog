@@ -21,7 +21,7 @@ const Homepage = () => {
   const fetchBlogs = async () => {
     const token = localStorage.getItem("token");
     const userId = getCurrentUserId();
-    setLoading(true);
+    setLoading(true); 
 
     try {
       const response = await fetch(
