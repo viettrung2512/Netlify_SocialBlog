@@ -29,6 +29,7 @@ const compression = require('compression');
 const app = express();
 app.use(cors({
   origin: [
+    'https://netlify-social.netlify.app/',
     'https://social-web-axbp.onrender.com',
     'https://accounts.google.com',
     'http://localhost:3000'

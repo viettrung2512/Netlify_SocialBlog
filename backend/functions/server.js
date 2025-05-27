@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({
   origin: [
-    'https://social-web3.netlify.app/',
+    'https://netlify-social.netlify.app/',
     'https://social-web-axbp.onrender.com',
     'https://accounts.google.com',
     'http://localhost:3000'
