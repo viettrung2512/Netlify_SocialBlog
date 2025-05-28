@@ -182,7 +182,7 @@ useEffect(() => {
             )}
 
             <div className="md:hidden flex items-center p-4 bg-gray-50 rounded-xl mb-6">
-              <a href={`/profile/${blog.author.id}`} className="flex-shrink-0">
+              <a href={`/profile/${blog.author._id}`} className="flex-shrink-0">
                 <img
                   src={blog.author.profilePicture || "/placeholder.svg"}
                   alt={blog.author.name}
@@ -191,7 +191,7 @@ useEffect(() => {
               </a>
               <div className="ml-3">
                 <a
-                  href={`/profile/${blog.author.id}`}
+                  href={`/profile/${blog.author._id}`}
                   className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
                 >
                   {blog.author.name}
@@ -235,7 +235,7 @@ useEffect(() => {
               <div className="h-24 bg-gradient-to-r from-blue-500 to-blue-600"></div>
               <div className="px-6 pb-6 text-center">
                 <div className="-mt-12 mb-4">
-                  <a href={`/profile/${blog.author.id}`}>
+                  <a href={`/profile/${blog.author._id}`}>
                     <img
                       src={blog.author.profilePicture || "/placeholder.svg"}
                       alt={blog.author.name}
@@ -244,12 +244,12 @@ useEffect(() => {
                   </a>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">
-                <a
-                  href={`/profile/${blog.author._id}`}
-                  className="hover:text-blue-600 transition-colors"
-                >
-                  {blog.author.name}
-                </a>
+                  <a
+                    href={`/profile/${blog.author._id}`}
+                    className="hover:text-blue-600 transition-colors"
+                  >
+                    {blog.author.name}
+                  </a>
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
                   {blog.author.email}
