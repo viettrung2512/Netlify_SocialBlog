@@ -17,7 +17,7 @@ const TopAuthors = () => {
         }
         const data = await response.json();
         const topAuthors = data.slice(0, 4).map((author) => ({
-          id: author._id,
+          id: author.id,
           postCount: author.postCount,
           name: author.userDetails[0].username, // Sử dụng username nếu không có name
           username: author.userDetails[0].username,
