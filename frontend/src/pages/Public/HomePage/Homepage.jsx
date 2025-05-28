@@ -15,13 +15,9 @@ const Homepage = () => {
   const [blogsPerPage, setBlogsPerPage] = useState(6);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const getCurrentUserId = () => {
-    return localStorage.getItem("userId");
-  };
 
   const fetchBlogs = async () => {
     const token = localStorage.getItem("token");
-    const userId = getCurrentUserId();
     setLoading(true);
 
     try {
@@ -35,7 +31,7 @@ const Homepage = () => {
           };
 
       const response = await fetch(
-        `${API_BASE_URL}/api/posts${userId ? `?userId=${userId}` : ""}`,
+        `${API_BASE_URL}/api/posts`, // Không cần ?userId
         {
           method: "GET",
           headers: headers,

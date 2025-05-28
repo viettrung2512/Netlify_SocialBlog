@@ -2,7 +2,8 @@ const postService = require('../services/postService');
 
 const getAllPosts = async (req, res) => {
   const { page, size , sort = 'createdAt,desc' } = req.query;
-  const result = await postService.getAllPosts(page, size, sort);
+  const userId = req.user ? req.user.userId : null;
+  const result = await postService.getAllPosts(page, size, sort, userId); 
   res.json({ content: result });
 };
 
