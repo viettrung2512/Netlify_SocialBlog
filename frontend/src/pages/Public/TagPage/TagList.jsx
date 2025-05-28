@@ -10,7 +10,13 @@ const TagList = () => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/posts`)
+    const token = localStorage.getItem("token");
+    fetch(`${API_BASE_URL}/api/posts`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const filteredBlogs = data.content.filter(
