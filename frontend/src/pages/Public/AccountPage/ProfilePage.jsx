@@ -42,6 +42,16 @@ const ProfilePage = () => {
     const token = localStorage.getItem("token");
     setLoading(true);
 
+    // Kiểm tra userId hợp lệ (24 ký tự hex)
+    const isValidObjectId = /^[a-f\d]{24}$/i.test(userId);
+    if (!isValidObjectId) {
+      console.error("userId không hợp lệ:", userId);
+      setLoading(false);
+      setUser(null);
+      setMyPosts([]);
+      return;
+    }
+
     const fetchUserInfo = async () => {
       try {
         const response = await fetch(
@@ -488,6 +498,12 @@ const ProfilePage = () => {
           items={following}
           loading={modalLoading}
         />
+      )}
+
+      {!loading && !user && (
+        <div className="text-center text-red-500 font-semibold my-8">
+          Không tìm thấy người dùng hoặc đường dẫn không hợp lệ.
+        </div>
       )}
     </div>
   );
