@@ -9,23 +9,14 @@ import "./Notification.css"
  * @property {boolean} read
  * @property {string} [date]
  * @property {string} [postId]
- */
-
-/**
- * @typedef {Object} Notification
- * @property {string} _id
- * @property {string} title
- * @property {string} message
- * @property {boolean} read
- * @property {string} [date]
- * @property {string} [postId]
+ * @property {Object} [postAuthor]
+ * @property {string} [postAuthor.profilePicture]
+ * @property {string} [profilePicture]
  */
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false)
-  /** @type {[Notification[], Function]} */
   const [notifications, setNotifications] = useState([])
-  /** @type {import('react').RefObject<HTMLDivElement>} */
   const dropdownRef = useRef(null)
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -45,7 +36,7 @@ const NotificationDropdown = () => {
         setNotifications(data)
       } else {
         const errorData = await response.json()
-        console.error("Lỗi khi lấy thông báo:", errorData.message)
+        console.error("Error fetching notifications:", errorData.message)
       }
     } catch (error) {
       console.error("Failed to fetch notifications:", error)
@@ -92,7 +83,7 @@ const NotificationDropdown = () => {
         if (data.postId) window.location.href = `/blog/${data.postId}`
       } else {
         const errorData = await response.json()
-        console.error("Lỗi khi đánh dấu thông báo là đã đọc:", errorData.message)
+        console.error("Error marking notification as read:", errorData.message)
       }
     } catch (error) {
       console.error("Failed to mark notification as read:", error)
@@ -119,14 +110,13 @@ const NotificationDropdown = () => {
         )
       } else {
         const errorData = await response.json()
-        console.error("Lỗi khi đánh dấu tất cả thông báo là đã đọc:", errorData.message)
+        console.error("Error marking all notifications as read:", errorData.message)
       }
     } catch (error) {
       console.error("Failed to mark all notifications as read:", error)
     }
   }
 
-  // Helper function to format date if available
   const formatDate = (dateString) => {
     if (!dateString) return ""
     const date = new Date(dateString)
