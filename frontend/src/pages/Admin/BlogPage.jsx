@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./Sidebar";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +29,13 @@ const BlogPage = () => {
 
   // Fetch blogs when the component mounts
   useEffect(() => {
-    fetch("/api/posts")
+    const token = localStorage.getItem("token");
+    fetch(`${API_BASE_URL}/api/posts`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const formattedBlogs = data.content.map((blog) => ({

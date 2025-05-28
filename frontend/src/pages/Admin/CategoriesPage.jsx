@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -9,15 +11,19 @@ const CategoriesPage = () => {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    // Fetch categories from the API
-    fetch("/api/posts")
+    const token = localStorage.getItem("token");
+    fetch(`${API_BASE_URL}/api/posts`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        // Lấy danh sách category từ các bài blog
         const categorySet = new Set();
         data.content.forEach((blog) => {
           if (blog.category) {
-            categorySet.add(blog.category); // Giả sử blog có trường category
+            categorySet.add(blog.category);
           }
         });
         setCategories([...categorySet].map((category, index) => ({

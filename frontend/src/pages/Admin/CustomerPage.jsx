@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CustomerPage = () => {
   const [customers, setCustomers] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -15,29 +17,17 @@ const CustomerPage = () => {
 
   // Lấy dữ liệu khách hàng từ API
   useEffect(() => {
-    const fetchCustomers = async () => {
-      const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      try {
-        const response = await fetch("/api/admin/users", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Thêm token vào headers
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setCustomers(data); // Gán dữ liệu khách hàng
-        } else {
-          console.error("Failed to fetch customers:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching customers:", error);
-      }
-    };
-
-    fetchCustomers();
+    const token = localStorage.getItem("token");
+    fetch(`${API_BASE_URL}/api/admin/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCustomers(data))
+      .catch((error) => console.error("Error fetching customers:", error));
   }, []);
 
   const handleInputChange = (e) => {

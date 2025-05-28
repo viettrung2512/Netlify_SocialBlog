@@ -20,6 +20,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar"; 
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Home = () => {
   const [blogsByMonth, setBlogsByMonth] = useState([]);
   const [blogsByCategory, setBlogsByCategory] = useState([]);
@@ -40,10 +42,16 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     // Fetch blogs
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/api/posts");
+        const response = await fetch(`${API_BASE_URL}/api/posts`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await response.json();
         setBlogsCount(data.content.length);
 
@@ -100,13 +108,12 @@ const Home = () => {
     fetchBlogs();
 
     // Fetch users
-    const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found");
       return;
     }
 
-    fetch("/api/admin/users", {
+    fetch(`${API_BASE_URL}/api/admin/users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
