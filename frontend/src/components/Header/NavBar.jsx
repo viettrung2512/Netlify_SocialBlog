@@ -7,6 +7,7 @@ import NotificationDropdown from "../Notification/NotificationDropdown";
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -16,10 +17,13 @@ const Navbar = () => {
     const username = localStorage.getItem("username");
     const profilePicture = localStorage.getItem("profilePicture");
     const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("userRole");
     if (token && username) {
       setUser({ username, profilePicture, userId });
+      setUserRole(role);
     } else {
       setUser(null);
+      setUserRole(null);
     }
   }, []);
 
@@ -45,7 +49,9 @@ const Navbar = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("profilePicture");
     localStorage.removeItem("userId");
+    localStorage.removeItem("userRole");
     setUser(null);
+    setUserRole(null);
     navigate("/");
   };
 
@@ -137,7 +143,7 @@ const Navbar = () => {
               </div>
               {showDropdown && (
                 <div
-                  ref={dropdownRef} 
+                  ref={dropdownRef}
                   className="absolute right-0 mt-12 w-40 rounded-xl bg-white border border-gray-600 shadow-lg z-20 transform translate-x-6"
                 >
                   <button
@@ -152,6 +158,14 @@ const Navbar = () => {
                   >
                     Account Detail
                   </button>
+                  {userRole === "ADMIN" && (
+                    <button
+                      onClick={() => navigate("/admin")}
+                      className="block px-4 py-2 text-left w-full rounded-xl bg-white text-indigo-600 border-white hover:bg-gray-100 font-semibold"
+                    >
+                      Admin
+                    </button>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="block px-4 py-2 text-left w-full rounded-xl bg-white text-black border-white hover:bg-white"
