@@ -185,7 +185,7 @@ const NotificationDropdown = () => {
                   >
                     <div className="notification-item-content">
                       <img
-                        src={notification.profilePicture || "https://images.spiderum.com/sp-xs-avatar/c3edf44040da11e88c56e97b1d97fbce.png"}
+                        src={notification.postAuthor?.profilePicture || notification.profilePicture || "https://images.spiderum.com/sp-xs-avatar/c3edf44040da11e88c56e97b1d97fbce.png"}
                         alt="User avatar"
                         className="notification-avatar"
                       />
