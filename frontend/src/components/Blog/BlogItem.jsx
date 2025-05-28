@@ -110,8 +110,8 @@ BlogItem.propTypes = {
     category: PropTypes.string,
     imageCloudUrl: PropTypes.string,
     likeCnt: PropTypes.number,
-    liked: PropTypes.boolean,
-    saved: PropTypes.boolean,
+    liked: PropTypes.bool,
+    saved: PropTypes.bool,
     author: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
