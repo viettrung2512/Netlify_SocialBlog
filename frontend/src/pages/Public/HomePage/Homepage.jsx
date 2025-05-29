@@ -365,7 +365,7 @@ const Homepage = () => {
                         handlePageButtonClick(Math.max(currentPage - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition duration-200"
+                      className="px-3 py-1 border-white border text-sm bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                       Previous
                     </button>
@@ -375,8 +375,8 @@ const Homepage = () => {
                         onClick={() => handlePageButtonClick(idx + 1)}
                         className={`px-4 py-2 rounded-lg ${
                           currentPage === idx + 1
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                             ? "text-blue-500 border-white bg-white"
+                            : "bg-white text-gray-700 border-white hover:bg-gray-100"
                         } transition duration-200`}
                       >
                         {idx + 1}
@@ -389,7 +389,7 @@ const Homepage = () => {
                         )
                       }
                       disabled={currentPage === totalPages}
-                      className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition duration-200"
+                      className="px-3 py-1 border-white border text-sm bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                       Next
                     </button>
