@@ -30,6 +30,13 @@ Creat post
 Profile
 ![image](https://github.com/user-attachments/assets/b6995284-485f-4577-9834-2958f6880df7)
 
+Follower
+<img width="1850" height="915" alt="image" src="https://github.com/user-attachments/assets/36f5168e-d273-4cec-8f52-007d09520172" />
+
+Following
+<img width="1881" height="923" alt="image" src="https://github.com/user-attachments/assets/bfb8838b-9dee-4075-ac3c-2534b89325e4" />
+
+
 Account setting
 ![image](https://github.com/user-attachments/assets/c43409de-3018-4b68-8c89-ef77e24bc880)
 
